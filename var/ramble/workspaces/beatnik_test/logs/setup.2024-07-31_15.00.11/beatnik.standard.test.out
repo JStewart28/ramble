@@ -1,0 +1,20 @@
+==>   Executing phase get_inputs
+==>   Executing phase license_includes
+==>   Executing phase software_create_env
+==> Creating Spack environment
+==> 
+==> *******************************************
+==> ********** Running Spack Command **********
+==> **     command: /home/jastewart/spack/bin/spack
+==> **     with args: ['env', 'create', '-d', '.']
+==> *******************************************
+==> 
+==> Created environment in /home/jastewart/ramble/var/ramble/workspaces/beatnik_test/software/beatnik
+==> You can activate this environment with:
+==>   spack env activate /home/jastewart/ramble/var/ramble/workspaces/beatnik_test/software/beatnik
+==> 
+==> *******************************************
+==> ***** Finished Running Spack Command ******
+==> *******************************************
+==> 
+==> Error: No defined environment matches required name beatnik

@@ -1,0 +1,5 @@
+==>   Executing phase get_inputs
+==>   Executing phase license_includes
+==>   Executing phase software_create_env
+==> Creating Spack environment
+==> Error: No defined environment matches required name beatnik

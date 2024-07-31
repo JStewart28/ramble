@@ -1,0 +1,66 @@
+==>   Executing phase get_inputs
+==>   Executing phase license_includes
+==>   Executing phase software_create_env
+==> Creating Spack environment
+==> 
+==> *******************************************
+==> ********** Running Spack Command **********
+==> **     command: /home/jastewart/spack/bin/spack
+==> **     with args: ['env', 'create', '-d', '.']
+==> *******************************************
+==> 
+==> Created environment in /home/jastewart/ramble/var/ramble/workspaces/beatnik_test/software/beatnik-env
+==> You can activate this environment with:
+==>   spack env activate /home/jastewart/ramble/var/ramble/workspaces/beatnik_test/software/beatnik-env
+==> 
+==> *******************************************
+==> ***** Finished Running Spack Command ******
+==> *******************************************
+==> 
+==> 
+==> *******************************************
+==> ********** Running Spack Command **********
+==> **     command: /home/jastewart/spack/bin/spack
+==> **     with args: ['find']
+==> *******************************************
+==> 
+==> 
+==> *******************************************
+==> ***** Finished Running Spack Command ******
+==> *******************************************
+==> 
+==>   Executing phase software_install_requested_compilers
+==> Installing compilers
+==>   Executing phase software_configure
+==> Concretizing Spack environment
+==> DRY-RUN: would run /home/jastewart/spack/bin/spack concretize
+==>          with args: ['--reuse']
+==>   Executing phase software_install
+==> Installing software
+==> DRY-RUN: would run /home/jastewart/spack/bin/spack install
+==>          with args: ['--reuse']
+==>   Executing phase evaluate_requirements
+==>   Executing phase define_package_paths
+==> Defining Spack variables
+==> DRY-RUN: would run /home/jastewart/spack/bin/spack
+==>          with args: ['find', '--format={name}', 'beatnik@develop', 'target=x86_64']
+==> DRY-RUN: would run /home/jastewart/spack/bin/spack
+==>          with args: ['location', '-i', 'beatnik@develop', 'target=x86_64']
+==>   Executing phase make_experiments
+==> Writing template execute_experiment to /home/jastewart/ramble/var/ramble/workspaces/beatnik_test/experiments/beatnik/standard/beatnik-env/execute_experiment
+==>   Executing phase write_inventory
+==>   Executing phase write_status
+==>   Executing phase warn_deprecated_variables
+==> Phase timing statistics:
+==>   get_inputs time: 0.0 (s)
+==>   license_includes time: 4e-05 (s)
+==>   software_create_env time: 0.42121 (s)
+==>   software_install_requested_compilers time: 0.00026 (s)
+==>   software_configure time: 0.00011 (s)
+==>   software_install time: 0.0001 (s)
+==>   evaluate_requirements time: 0.0 (s)
+==>   define_package_paths time: 0.00049 (s)
+==>   make_experiments time: 0.00137 (s)
+==>   write_inventory time: 6e-05 (s)
+==>   write_status time: 0.00018 (s)
+==>   warn_deprecated_variables time: 0.00019 (s)

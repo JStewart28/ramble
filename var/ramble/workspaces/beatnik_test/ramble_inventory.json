@@ -1,0 +1,61 @@
+{
+  "experiments": [
+    {
+      "name": "beatnik.standard.beatnik-env",
+      "digest": "b2f7b7816ed4622104ed5a694938607dbaac8f674bcf885fc68980c172216896",
+      "contents": {
+        "application_definition": "f80739174cd3923a8ea5b69d6855d66e2951432489230125fc9123ac559f6056",
+        "modifier_definitions": [],
+        "attributes": [
+          {
+            "name": "variables",
+            "digest": "81a511d7bb902bedbd030e16332eb2e41596e95d54193dd0691788d2ccb92c65"
+          },
+          {
+            "name": "modifiers",
+            "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          {
+            "name": "chained_experiments",
+            "digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+          },
+          {
+            "name": "internals",
+            "digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          {
+            "name": "env_vars",
+            "digest": "035f0c03572706ee6da6f0f74614717b201aabe0f7671fc094478d1a97e5dcc4"
+          }
+        ],
+        "inputs": [],
+        "software": [
+          {
+            "name": "software/beatnik-env",
+            "digest": "1a9701a794250abd22a44116f305f1e53db133372bad3c1465378f05ebfd5325"
+          }
+        ],
+        "templates": [
+          {
+            "name": "execute_experiment",
+            "digest": "860b512dd46c792e51701bee5ea5a459709833cefcb62d048a2c90f744c90129"
+          }
+        ],
+        "package_manager": [
+          {
+            "name": "spack",
+            "version": "0.22.0.dev0 (d2462fb0af50ca5a87ae4d2aef700eb314a1e373)",
+            "digest": "194f33c260c3ec6afe3a0a2f29d8eb00eca83b7bb98715e46509403fb4e617ab"
+          }
+        ]
+      }
+    }
+  ],
+  "versions": [
+    {
+      "name": "ramble",
+      "version": "0.5.0 (1179cbef88340cb86a0d33e43b7342102f373fc1)",
+      "digest": "df7d2f858afc923a2464bc2278c3ec1aa9af4eb48c92dcefb796aa51c2f23c77"
+    }
+  ]
+}

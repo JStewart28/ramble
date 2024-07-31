@@ -1,0 +1,5 @@
+==> Experiment #1 (1/1):
+==>     name: beatnik.standard.beatnik
+==>     root experiment_index: 1
+==>     log file: /home/jastewart/ramble/var/ramble/workspaces/beatnik_test/logs/setup.2024-07-31_15.07.08/beatnik.standard.beatnik.out
+==> Error: No defined environment matches required name beatnik

@@ -1,0 +1,48 @@
+# This is a ramble workspace config file.
+#
+# It describes the experiments, the software stack
+# and all variables required for ramble to configure
+# experiments.
+# As an example, experiments can be defined as follows.
+# applications:
+#   hostname: # Application name, as seen in `ramble list`
+#     variables:
+#       iterations: '5'
+#     workloads:
+#       serial: # Workload name, as seen in `ramble info <app>`
+#         variables:
+#           type: 'test'
+#         experiments:
+#           single_node: # Arbitrary experiment name
+#             variables:
+#               n_ranks: '{processes_per_node}'
+
+ramble:
+  variants:
+    package_manager: spack
+  env_vars:
+    set:
+      OMP_NUM_THREADS: '{n_threads}'
+  variables:
+    mpi_command: mpirun -n {n_ranks}
+    batch_submit: '{execute_experiment}'
+    processes_per_node: -1
+  applications:
+    beatnik:
+      workloads:
+        standard:
+          experiments:
+            '{env_name}':
+              variables:
+                n_ranks: '1'
+                env_name: ['beatnik-env']
+        
+  software:
+    packages:
+      beatnik:
+        pkg_spec: beatnik@develop target=x86_64
+        # compiler: gcc11
+    environments:
+      beatnik-env:
+        packages:
+        - beatnik
