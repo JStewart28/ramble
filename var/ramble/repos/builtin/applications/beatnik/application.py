@@ -1,0 +1,133 @@
+# Copyright 2022-2024 The Ramble Authors
+#
+# Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+# https://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+# <LICENSE-MIT or https://opensource.org/licenses/MIT>, at your
+# option. This file may not be copied, modified, or distributed
+# except according to those terms.
+
+import os
+from ramble.appkit import *
+from ramble.expander import Expander
+
+
+class Beatnik(ExecutableApplication):
+    """Define BEATNIK application"""
+
+    name = "BEATNIK"
+
+    maintainers("jasonstewart", "patrickbridges")
+
+    tags("proxy-app", "mini-app")
+
+    define_compiler("gcc11", pkg_spec="gcc@11.4.0", package_manager="spack*")
+    define_compiler("cce16", pkg_spec="cce@16.0.1", package_manager="spack*")
+
+    software_spec(
+        "impi2018", pkg_spec="intel-mpi@2018.4.274", package_manager="spack*"
+    )
+
+    software_spec(
+        "beatnik",
+        pkg_spec="beatnik@develop +rocm amdgpu_target=gfx90a %cce",
+        compiler="cce16",
+        package_manager="spack*",
+    )
+
+    required_package("beatnik", package_manager="spack*")
+
+    executable("execute", "beatnik1.0 {flags}", use_mpi=True)
+
+    workload("standard", executables=["execute"])
+
+    # workload_variable(
+        # "size_flag",
+        # default="",
+        # description="Problem size in a single dimension. Real problem is size^3. Needs to be prefixed by -s",
+        # workloads=["standard"],
+    # )
+
+    # workload_variable(
+        # "iteration_flag",
+        # default="",
+        # description="Fixed number of iterations to perform. Needs to be prefixed by -i",
+        # workloads=["standard"],
+    # )
+
+    # workload_variable(
+        # "flags",
+        # default="{size_flag} {iteration_flag}",
+        # description="Flags to pass in to LULESH",
+        # workloads=["standard"],
+    # )
+
+    # log_str = os.path.join(
+        # Expander.expansion_str("experiment_run_dir"),
+        # Expander.expansion_str("experiment_name") + ".out",
+    # )
+
+    # figure_of_merit(
+        # "Time",
+        # log_file=log_str,
+        # fom_regex=r"\s*Elapsed time\s+=\s+(?P<time>[0-9]+\.[0-9]+).*",
+        # group_name="time",
+        # units="s",
+    # )
+
+    # figure_of_merit(
+        # "FOM",
+        # log_file=log_str,
+        # fom_regex=r"\s*FOM\s+=\s+(?P<fom>[0-9]+\.[0-9]+).*",
+        # group_name="fom",
+        # units="z/s",
+    # )
+
+    # figure_of_merit(
+        # "Size",
+        # log_file=log_str,
+        # fom_regex=r"\s*Problem size\s+=\s+(?P<size>[0-9]+)",
+        # group_name="size",
+        # units="",
+    # )
+
+    # figure_of_merit(
+        # "Grind Time",
+        # log_file=log_str,
+        # fom_regex=r"\s*Grind time \(us/z/c\)\s+=\s+(?P<grind>[0-9]+\.[0-9]+).*",
+        # group_name="grind",
+        # units="s/element",
+    # )
+
+    # figure_of_merit(
+        # "NumTasks",
+        # log_file=log_str,
+        # fom_regex=r"\s*MPI tasks\s+=\s+(?P<tasks>[0-9]+)",
+        # group_name="tasks",
+        # units="",
+    # )
+
+    # figure_of_merit(
+        # "Iterations",
+        # log_file=log_str,
+        # fom_regex=r"\s*Iteration count\s+=\s+(?P<iterations>[0-9]+)",
+        # group_name="iterations",
+        # units="",
+    # )
+
+    def _make_experiments(self, workspace, app_inst=None):
+        """
+        BEATNIK requires the number of ranks to be a square number.
+
+        Here we compute the closest integer equal to or larger than the target
+        number of ranks.
+
+        We also need to recompute the number of nodes, or the value of
+        processes per node here too.
+        """
+        num_ranks = int(self.expander.expand_var_name("n_ranks"))
+
+        square_root = int(num_ranks ** (1.0 / 2.0))
+
+        self.variables["n_ranks"] = square_root**2
+
+        super()._make_experiments(workspace)
