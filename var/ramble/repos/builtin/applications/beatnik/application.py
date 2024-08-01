@@ -24,13 +24,13 @@ class Beatnik(ExecutableApplication):
     define_compiler("cce16", pkg_spec="cce@16.0.1", package_manager="spack*")
 
     software_spec(
-        "impi2018", pkg_spec="intel-mpi@2018.4.274", package_manager="spack*"
+        "openmpi_4.4.1", pkg_spec="openmpi@4.1.4", package_manager="spack*"
     )
 
     software_spec(
         "beatnik",
-        pkg_spec="beatnik@develop +rocm amdgpu_target=gfx90a %cce",
-        compiler="cce16",
+        pkg_spec="beatnik@develop +cuda cuda_arch=86",
+        compiler="gcc11",
         package_manager="spack*",
     )
 
