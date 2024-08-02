@@ -35,14 +35,21 @@ ramble:
             '{env_name}':
               variables:
                 n_ranks: '1'
-                env_name: ['beatnik-env']
-        
+                env_name: [beatnik-env]
   software:
     packages:
+      gcc11:
+        pkg_spec: gcc@11.4.0
+      cce16:
+        pkg_spec: cce@16.0.1
+      openmpi_4.4.1:
+        pkg_spec: openmpi@4.1.4
       beatnik:
-        pkg_spec: beatnik@develop target=x86_64
+        pkg_spec: beatnik@develop +cuda cuda_arch=86
+        compiler: gcc11
         # compiler: gcc11
     environments:
       beatnik-env:
         packages:
+        - openmpi_4.4.1
         - beatnik
