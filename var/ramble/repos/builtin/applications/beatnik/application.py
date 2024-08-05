@@ -7,9 +7,16 @@
 # except according to those terms.
 
 import os
+import subprocess
 from ramble.appkit import *
 from ramble.expander import Expander
 
+def find_executable(executable):
+    try:
+        path = subprocess.check_output(['which', executable], stderr=subprocess.STDOUT).decode().strip()
+        return path
+    except subprocess.CalledProcessError:
+        return None
 
 class Beatnik(ExecutableApplication):
     """Define BEATNIK application"""
@@ -21,16 +28,21 @@ class Beatnik(ExecutableApplication):
     tags("proxy-app", "mini-app")
 
     define_compiler("gcc11", pkg_spec="gcc@11.4.0", package_manager="spack*")
+    define_compiler("gcc8", pkg_spec="gcc@8.3.1", package_manager="spack*")
     define_compiler("cce16", pkg_spec="cce@16.0.1", package_manager="spack*")
-
-    software_spec(
-        "openmpi_4.4.1", pkg_spec="openmpi@4.1.4", package_manager="spack*"
-    )
 
     software_spec(
         "beatnik",
         pkg_spec="beatnik@develop +cuda cuda_arch=86",
         compiler="gcc11",
+        package_manager="spack*",
+        # external_env="~/spack_envs/beatnik_lassen"
+    )
+    
+    software_spec(
+        "beatnik",
+        pkg_spec="beatnik@develop +cuda cuda_arch=86",
+        compiler="gcc8",
         package_manager="spack*",
     )
 
@@ -40,79 +52,15 @@ class Beatnik(ExecutableApplication):
 
     workload("standard", executables=["execute"])
 
-    # workload_variable(
-        # "size_flag",
-        # default="",
-        # description="Problem size in a single dimension. Real problem is size^3. Needs to be prefixed by -s",
-        # workloads=["standard"],
-    # )
+    mpi_executables = {
+        'mpicc': find_executable('mpicc'),
+        'mpicxx': find_executable('mpicxx'),
+        # 'mpifc': find_executable('mpifc'),
+        'mpirun': find_executable('mpirun')
+    }
 
-    # workload_variable(
-        # "iteration_flag",
-        # default="",
-        # description="Fixed number of iterations to perform. Needs to be prefixed by -i",
-        # workloads=["standard"],
-    # )
-
-    # workload_variable(
-        # "flags",
-        # default="{size_flag} {iteration_flag}",
-        # description="Flags to pass in to LULESH",
-        # workloads=["standard"],
-    # )
-
-    # log_str = os.path.join(
-        # Expander.expansion_str("experiment_run_dir"),
-        # Expander.expansion_str("experiment_name") + ".out",
-    # )
-
-    # figure_of_merit(
-        # "Time",
-        # log_file=log_str,
-        # fom_regex=r"\s*Elapsed time\s+=\s+(?P<time>[0-9]+\.[0-9]+).*",
-        # group_name="time",
-        # units="s",
-    # )
-
-    # figure_of_merit(
-        # "FOM",
-        # log_file=log_str,
-        # fom_regex=r"\s*FOM\s+=\s+(?P<fom>[0-9]+\.[0-9]+).*",
-        # group_name="fom",
-        # units="z/s",
-    # )
-
-    # figure_of_merit(
-        # "Size",
-        # log_file=log_str,
-        # fom_regex=r"\s*Problem size\s+=\s+(?P<size>[0-9]+)",
-        # group_name="size",
-        # units="",
-    # )
-
-    # figure_of_merit(
-        # "Grind Time",
-        # log_file=log_str,
-        # fom_regex=r"\s*Grind time \(us/z/c\)\s+=\s+(?P<grind>[0-9]+\.[0-9]+).*",
-        # group_name="grind",
-        # units="s/element",
-    # )
-
-    # figure_of_merit(
-        # "NumTasks",
-        # log_file=log_str,
-        # fom_regex=r"\s*MPI tasks\s+=\s+(?P<tasks>[0-9]+)",
-        # group_name="tasks",
-        # units="",
-    # )
-
-    # figure_of_merit(
-        # "Iterations",
-        # log_file=log_str,
-        # fom_regex=r"\s*Iteration count\s+=\s+(?P<iterations>[0-9]+)",
-        # group_name="iterations",
-        # units="",
-    # )
+    if None in mpi_executables.values():
+        raise EnvironmentError("One or more MPI executables could not be found.")
 
     def _make_experiments(self, workspace, app_inst=None):
         """
