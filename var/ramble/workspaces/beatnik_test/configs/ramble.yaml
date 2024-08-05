@@ -42,11 +42,14 @@ ramble:
         pkg_spec: gcc@11.4.0
       gcc8:
         pkg_spec: gcc@8.3.1
-      cce16:
-        pkg_spec: cce@16.0.1
-      openmpi_4.4.1:
-        pkg_spec: openmpi@4.1.4
       
     environments:
+      beatnik:
+        pkg_spec: beatnik@develop +cuda cuda_arch=86
+        compiler: gcc11
+        # compiler: gcc11
+    environments:
       beatnik-env:
-        external_env: /g/g20/stewartj/spack_envs/beatnik_lassen_ramble/
+        packages:
+        - openmpi_4.4.1
+        - beatnik
