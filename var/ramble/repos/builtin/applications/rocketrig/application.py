@@ -18,10 +18,10 @@ def find_executable(executable):
     except subprocess.CalledProcessError:
         return None
 
-class Beatnik(ExecutableApplication):
-    """Define BEATNIK application"""
+class Rocketrig(ExecutableApplication):
+    """Define ROCKETRIG application"""
 
-    name = "BEATNIK"
+    name = "ROCKETRIG"
 
     maintainers("jasonstewart", "patrickbridges")
 
@@ -48,9 +48,22 @@ class Beatnik(ExecutableApplication):
 
     required_package("beatnik", package_manager="spack*")
 
-    executable("execute", "beatnik1.0 {flags}", use_mpi=True)
+    executable("execute", "rocketrig", use_mpi=True)
 
     workload("standard", executables=["execute"])
+    
+    
+    log_str = os.path.join(
+        Expander.expansion_str("experiment_run_dir"), "rocketrig.out"
+    )
+    sim_time_regex = r"measured_time:\s*(?P<time>\d+\.\d+)"
+    figure_of_merit(
+        "Simulation time",
+        log_file=log_str,
+        fom_regex=sim_time_regex,
+        group_name="time",
+        units="s",
+    )
 
     mpi_executables = {
         'mpicc': find_executable('mpicc'),
@@ -64,7 +77,7 @@ class Beatnik(ExecutableApplication):
 
     def _make_experiments(self, workspace, app_inst=None):
         """
-        BEATNIK requires the number of ranks to be a square number.
+        ROCKETRIG requires the number of ranks to be a square number.
 
         Here we compute the closest integer equal to or larger than the target
         number of ranks.
