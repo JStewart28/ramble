@@ -51,5 +51,4 @@ ramble:
     environments:
       beatnik-env:
         packages:
-        - openmpi_4.4.1
         - beatnik
